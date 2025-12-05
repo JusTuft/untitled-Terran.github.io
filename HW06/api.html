@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 2</title>
+
+    <style>
+        .assignment-header {
+            background-color: #333;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .assignment-header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            color: white;
+            display: inline-block;
+        }
+        .assignment-header nav {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .assignment-header nav a {
+            color: #efefef;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        .assignment-header nav a:hover {
+            background-color: #555;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #cdc2c2;
+        }
+        .api-container {
+            border: 1px solid #ccc;
+            background-color: #b1e1ff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .controls label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .controls select, .controls button {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .controls button {
+            cursor: pointer;
+            background-color: #004a9c;
+            color: white;
+            border: 1px solid #004a9c;
+        }
+        #api-results {
+            margin-top: 20px;
+        }
+        #api-results ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+        #api-results li {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        .loading-message {
+            font-style: italic;
+            color: #777;
+        }
+        .written-content {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .written-content h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="assignment-header">
+        <h1>CS 20 - Assignment 6</h1>
+        <nav>
+            <a href="products1.html">Task 1</a>
+            <a href="products2.html">Task 3</a>
+            <a href="products3.html">Task 4</a>
+            <a href="api.html">Part 2</a>
+        </nav>
+    </header>
+
+    <main class="api-container">
+        <h2>Car Model Finder</h2>
+        <div class="controls">
+            <label for="make-select">Select a Car Make:</label>
+            <select id="make-select">
+                <option value="">Loading makes...</option>
+            </select>
+            <button id="models-button">Get Models</button>
+        </div>
+        
+        <div id="api-results">
+            <p>Please select a make and click the button to see all models.</p>
+        </div>
+
+        
+    </main>
+    <div class="written-content">
+            <h3>About This API</h3>
+            
+            <p>
+                <strong>Describe the API you selected and why you selected it:</strong><br>
+                I selected the NHTSA vPIC (Vehicle Product Information Catalog) API. This is a free, public API from the U.S. Department of Transportation. I chose it because it is specifically car-related (I wanted both parts of this assignment to be car related), requires no API key, and provides a vast amount of data, meeting all the assignment requirements.
+            </p>
+
+            <p>
+                <strong>Cite the website where you found it:</strong><br>
+                NHTSA's vPIC API Homepage: <i>https://vpic.nhtsa.dot.gov/api/</i>
+            </p>
+            
+            <p>
+                <strong>Describe the options/parameters you used for the API request:</strong><br>
+                This page uses two different API endpoints.
+                <ol>
+                    <li>First, to get the list of car makes, I call <i>/api/vehicles/GetMakesForVehicleType/car</i>. The parameter here is <strong>"car"</strong>, which tells the API to only return makes for passenger cars.</li>
+                    <li>Second, when the user clicks the button, I call <i>/api/vehicles/GetModelsForMake/{makeName}</i>. The parameter is the <strong>make name</strong> (e.g., "ACURA") that the user selected from the dropdown.</li>
+                </ol>
+                Both endpoints also use the <i>?format=json</i> parameter to ensure the data is returned in JSON format.
+            </p>
+
+            <p>
+                <strong>Give an example of where this API would be helpful:</strong><br>
+                This API would be extremely helpful for any website that needs to get possible vehicle options. If I combine this with part 1 then I could create a website where you can select a make and model and combine it with another api that gets information on the different years, trims, prices, and features for people who are trying to buy cars.
+            </p>
+        </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            
+            const makeSelect = document.getElementById('make-select');
+            const modelsButton = document.getElementById('models-button');
+            const resultsDiv = document.getElementById('api-results');
+
+            function loadMakes() {
+                
+                const originalUrl = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json';
+                const makesUrl = 'https://corsproxy.io/?' + originalUrl;
+
+                fetch(makesUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                        const cleanMakes = data.Results.filter(make => make && make.MakeName);
+                        
+                        cleanMakes.sort((a, b) => a.MakeName.localeCompare(b.MakeName));
+
+                        makeSelect.innerHTML = '<option value="">-- Select a Make --</option>'; 
+                        
+                        cleanMakes.forEach(make => {
+                            const option = document.createElement('option');
+                            option.value = make.MakeName;
+                            option.textContent = make.MakeName;
+                            makeSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching makes:', error);
+                        makeSelect.innerHTML = '<option value="">Error loading data</option>';
+                    });
+            }
+
+            modelsButton.addEventListener('click', () => {
+                const selectedMake = makeSelect.value;
+                
+                if (!selectedMake) {
+                    resultsDiv.innerHTML = '<p>Please select a make first.</p>';
+                    return;
+                }
+                
+                resultsDiv.innerHTML = `<p class="loading-message">Loading models for ${selectedMake}...</p>`;
+                
+                const originalModelsUrl = `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/${selectedMake}?format=json`;
+                const modelsUrl = 'https://corsproxy.io/?' + encodeURIComponent(originalModelsUrl);
+                
+
+                fetch(modelsUrl)
+                    .then(response => response.json())
+                    .then(data => {
+
+                        let html = `<h3>Models for ${selectedMake}</h3>`;
+
+                        if (data.Count === 0 || !data.Results) {
+                            html += '<p>No models found for this manufacturer.</p>';
+                        } else {
+                            
+                            const cleanModels = data.Results.filter(model => model && model.Model_Name);
+
+                            html += '<ul>';
+                            cleanModels.forEach(model => {
+                                html += `<li>${model.Model_Name}</li>`;
+                            });
+                            html += '</ul>';
+                        }
+                        
+                        resultsDiv.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching models:', error);
+                        resultsDiv.innerHTML = '<p>Error loading models. Please try again.</p>';
+                    });
+            });
+            loadMakes();
+        });
+    </script>
+
+</body>
+</html>

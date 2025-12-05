@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4</title>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <style>
+        .assignment-header {
+            background-color: #333;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .assignment-header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            color: white;
+            display: inline-block;
+        }
+        .assignment-header nav {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .assignment-header nav a {
+            color: #efefef;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        .assignment-header nav a:hover {
+            background-color: #555;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .filter-controls {
+            background-color: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .filter-controls label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .filter-controls select, .filter-controls button {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .filter-controls button {
+            cursor: pointer;
+            background-color: #004a9c;
+            color: white;
+            border: 1px solid #004a9c;
+        }
+        .filter-controls button:hover {
+            background-color: #003366;
+        }
+        #filter-result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 15px;
+            min-height: 50px;
+        }
+        .filtered-item {
+            font-size: 18px;
+            padding: 5px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .filtered-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<header class="assignment-header">
+    <h1>CS 20 - Assignment 6</h1>
+    <nav>
+        <a href="products1.html">Task 1</a>
+        <a href="products2.html">Task 3</a>
+        <a href="products3.html">Task 4</a>
+        <a href="api.html">Part 2</a>
+    </nav>
+</header>
+<body>
+
+    <h1>Our Car Products (Filtered)</h1>
+    
+    <div class="filter-controls">
+        <label for="categoryFilter">Filter by Category:</label>
+        <select id="categoryFilter">
+            </select>
+        <button id="filterButton">Filter</button>
+    </div>
+    
+    <div id="filter-result">
+        </div>
+
+    <script>
+        let allProducts = [];
+
+        $(document).ready(function() {
+            
+            $.get("products.json", function(data) {
+                
+                allProducts = data; 
+
+                const categories = new Set();
+                
+                data.forEach(function(product) {
+                    product.Categories.forEach(function(category) {
+                        categories.add(category);
+                    });
+                });
+
+                let optionHtml = '<option value="">-- Select a Category --</option>';
+                categories.forEach(function(category) {
+                    optionHtml += `<option value="${category}">${category}</option>`;
+                });
+                
+                $("#categoryFilter").html(optionHtml);
+            });
+
+            $("#filterButton").on("click", function() {
+                
+                const selectedCategory = $("#categoryFilter").val();
+                
+                let filteredHtml = "<h2>Results:</h2>";
+                
+                if (!selectedCategory) {
+                    filteredHtml = "<p>Please select a category to filter.</p>";
+                    $("#filter-result").html(filteredHtml);
+                    return; 
+                }
+
+                let matchFound = false;
+                
+                allProducts.forEach(function(product) {
+                    
+                    if (product.Categories.includes(selectedCategory)) {
+                        
+                        filteredHtml += `<div class="filtered-item">${product.Name}</div>`;
+                        matchFound = true;
+                    }
+                });
+
+                if (!matchFound) {
+                    filteredHtml = "<h2>Results:</h2><p>No products found in this category.</p>";
+                }
+
+                $("#filter-result").html(filteredHtml);
+            });
+        });
+    </script>
+
+</body>
+</html>

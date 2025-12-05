@@ -1,0 +1,62 @@
+[
+    {
+        "Name": "2019 Subaru WRX",
+        "Description": "A modern AWD sedan with rally heritage. My car!",
+        "Price": 24998,
+        "Categories": ["JDM", "Sedan", "Modern"]
+    },
+    {
+        "Name": "2020 Porsche 911 Carrera",
+        "Description": "The iconic German rear-engine sports car.",
+        "Price": 115000,
+        "Categories": ["German", "Coupe", "Modern"]
+    },
+    {
+        "Name": "1980 Chevrolet Camaro Z28",
+        "Description": "A classic American muscle car with a V8.",
+        "Price": 28000,
+        "Categories": ["Muscle", "Coupe", "Classic"]
+    },
+    {
+        "Name": "1995 Toyota Supra Turbo",
+        "Description": "A legendary JDM sports car with a 2JZ engine.",
+        "Price": 95000,
+        "Categories": ["JDM", "Coupe", "Classic"]
+    },
+    {
+        "Name": "2020 Ford Mustang GT",
+        "Description": "The modern American muscle car with a 5.0L V8.",
+        "Price": 32998,
+        "Categories": ["Muscle", "Coupe", "Modern"]
+    },
+    {
+        "Name": "2020 Toyota GR Supra",
+        "Description": "The fifth-generation Supra, a modern JDM coupe.",
+        "Price": 49123,
+        "Categories": ["JDM", "German", "Coupe", "Modern"]
+    },
+    {
+        "Name": "2019 BMW M4",
+        "Description": "A high-performance German coupe.",
+        "Price": 46998,
+        "Categories": ["German", "Coupe", "Modern"]
+    },
+    {
+        "Name": "1998 Nissan Skyline GT-R",
+        "Description": "A legendary JDM car, known as 'Godzilla'.",
+        "Price": 125000,
+        "Categories": ["JDM", "Coupe", "Classic"]
+    },
+    {
+        "Name": "1978 Subaru Brat",
+        "Description": "A classic compact truck with AWD.",
+        "Price": 18000,
+        "Categories": ["Truck", "Classic"]
+    },
+    {
+        "Name": "2025 Ford F-150 Raptor",
+        "Description": "A blend of raw power, performance and utility.",
+        "Price": 125000,
+        "Categories": ["Truck", "Modern", "Muscle"]
+    }
+]

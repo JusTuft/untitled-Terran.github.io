@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2</title>
+    <style>
+        .assignment-header {
+            background-color: #333;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .assignment-header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            color: white;
+            display: inline-block;
+        }
+        .assignment-header nav {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .assignment-header nav a {
+            color: #efefef;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        .assignment-header nav a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<header class="assignment-header">
+    <h1>CS 20 - Assignment 6</h1>
+    <nav>
+        <a href="products1.html">Task 1</a>
+        <a href="products2.html">Task 3</a>
+        <a href="products3.html">Task 4</a>
+        <a href="api.html">Part 2</a>
+    </nav>
+</header>
+<body>
+    <h1>Cars</h1>
+    <script>
+        const carProducts = [
+            {
+                "Name": "2019 Subaru WRX",
+                "Description": "A modern AWD sedan with rally heritage. My car!",
+                "Price": 24998,
+                "Categories": ["JDM", "Sedan", "Modern"]
+            },
+            {
+                "Name": "2020 Porsche 911 Carrera",
+                "Description": "The iconic German rear-engine sports car.",
+                "Price": 115000,
+                "Categories": ["German", "Coupe", "Modern"]
+            },
+            {
+                "Name": "1980 Chevrolet Camaro Z28",
+                "Description": "A classic American muscle car with a V8.",
+                "Price": 28000,
+                "Categories": ["Muscle", "Coupe", "Classic"]
+            },
+            {
+                "Name": "1995 Toyota Supra Turbo",
+                "Description": "A legendary JDM sports car with a 2JZ engine.",
+                "Price": 95000,
+                "Categories": ["JDM", "Coupe", "Classic"]
+            },
+            {
+                "Name": "2020 Ford Mustang GT",
+                "Description": "The modern American muscle car with a 5.0L V8.",
+                "Price": 32998,
+                "Categories": ["Muscle", "Coupe", "Modern"]
+            },
+            {
+                "Name": "2020 Toyota GR Supra",
+                "Description": "The fifth-generation Supra, a modern JDM coupe.",
+                "Price": 49123,
+                "Categories": ["JDM", "German", "Coupe", "Modern"]
+            },
+            {
+                "Name": "2019 BMW M4",
+                "Description": "A high-performance German coupe.",
+                "Price": 46998,
+                "Categories": ["German", "Coupe", "Modern"]
+            },
+            {
+                "Name": "1998 Nissan Skyline GT-R",
+                "Description": "A legendary JDM car, known as 'Godzilla'.",
+                "Price": 125000,
+                "Categories": ["JDM", "Coupe", "Classic"]
+            }
+        ];
+
+        const jsonString = JSON.stringify(carProducts, null, 2); 
+        
+        document.write('<pre>' + jsonString + '</pre>');
+    </script>
+</body>
+</html>

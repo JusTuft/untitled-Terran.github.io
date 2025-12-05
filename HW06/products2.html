@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3</title>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <style>
+        .assignment-header {
+            background-color: #333;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .assignment-header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            color: white;
+            display: inline-block;
+        }
+        .assignment-header nav {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .assignment-header nav a {
+            color: #efefef;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        .assignment-header nav a:hover {
+            background-color: #555;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #cdc2c2;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #004a9c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #003366;
+        }
+        #result {
+            border: 1px solid #ccc;
+            background-color: #b1e1ff;
+            padding: 15px;
+        }
+        .product-item {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .product-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .product-desc {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007700;
+        }
+        .product-cats {
+            font-size: 14px;
+            font-style: italic;
+            color: #777;
+        }
+    </style>
+</head>
+<header class="assignment-header">
+    <h1>CS 20 - Assignment 6</h1>
+    <nav>
+        <a href="products1.html">Task 1</a>
+        <a href="products2.html">Task 3</a>
+        <a href="products3.html">Task 4</a>
+        <a href="api.html">Part 2</a>
+    </nav>
+</header>
+<body>
+
+    <h1>Our Car Products</h1>
+    
+    <button id="loadProducts">Load Products</button>
+    
+    <div id="result">
+        </div>
+
+    <script>
+        $(document).ready(function() {
+            
+            $("#loadProducts").on("click", function() {
+                
+                $.get("products.json", function(data) {
+                    
+                    let htmlContent = "";
+
+                    data.forEach(function(product) {
+                        
+                        let formattedPrice = "$" + product.Price.toLocaleString();
+                        
+                        let categoriesString = product.Categories.join(", ");
+
+                        htmlContent += `
+                            <div class="product-item">
+                                <div class="product-name">${product.Name}</div>
+                                <div class="product-desc">${product.Description}</div>
+                                <div class="product-price">Price: ${formattedPrice}</div>
+                                <div class="product-cats">Categories: ${categoriesString}</div>
+                            </div>
+                        `;
+                    });
+
+                    $("#result").html(htmlContent);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
