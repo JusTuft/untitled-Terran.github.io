@@ -1,7 +1,7 @@
 let userLocation = null;
 let items = [];
 
-document.getElementById("locBtn").onclick = () => {
+document.getElementById("loc_btn").onclick = () => {
     if (!navigator.geolocation) {
         alert("Geolocation not supported.");
         return;
@@ -15,7 +15,7 @@ document.getElementById("locBtn").onclick = () => {
     });
 };
 
-document.getElementById("searchBtn").onclick = async () => {
+document.getElementById("search_btn").onclick = async () => {
     const res = await fetch("/items");
     items = await res.json();
     displayResults(items);
